@@ -1,3 +1,5 @@
+package fajen;
+
 import java.awt.*;
 
 public class Main
@@ -6,6 +8,6 @@ public class Main
 
     public static void main(String[] args)
     {
-//        MainWindow mainWindow = new MainWindow(MAIN_WINDOW_DIMENSION);
+        MainWindow mainWindow = new MainWindow(MAIN_WINDOW_DIMENSION);
     }
 }
