@@ -85,9 +85,10 @@ abstract public class Organism
     protected Color colorOfTile;
     protected World world;
 
-    public void draw()
+    public void draw(Graphics g, Dimension dimension)
     {
-
+        g.setColor(this.colorOfTile);
+        g.fillRect(position.x * world.getSizeOfTile(), position.y * world.getSizeOfTile(), dimension.width, dimension.height);
     }
 
     abstract void action();

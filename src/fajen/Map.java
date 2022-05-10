@@ -24,27 +24,29 @@ public class Map
     Map ()
     {
         this.mapOfOrganism = new Organism[DEFAULT_MAP_SIZE][DEFAULT_MAP_SIZE];
+        sizeY = DEFAULT_MAP_SIZE;
+        sizeX = DEFAULT_MAP_SIZE;
     }
 
     Map(short y, short x)
     {
-        this.mapOfOrganism = new Organism[y][x];
+        this.mapOfOrganism = new Organism[x][y];
         sizeX = x;
         sizeY = y;
     }
 
-    public void setOrganismOnTile (short y, short x, Organism org)
+    public void setOrganismOnTile (short x, short y, Organism org)
     {
-        this.mapOfOrganism[y][x] = org;
+        this.mapOfOrganism[x][y] = org;
     }
 
     public void moveOrganism (Organism organism, Point newPosition)
     {
-        if (mapOfOrganism[newPosition.y][newPosition.x] == null)
+        if (mapOfOrganism[newPosition.x][newPosition.y] == null)
         {
-            mapOfOrganism[newPosition.y][newPosition.x] = organism;
+            mapOfOrganism[newPosition.x][newPosition.y] = organism;
             Point organismPosition = organism.getPosition();
-            mapOfOrganism[organismPosition.y][organismPosition.x] = null;
+            mapOfOrganism[organismPosition.x][organismPosition.y] = null;
         }
     }
 
