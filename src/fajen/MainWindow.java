@@ -24,7 +24,10 @@ public class MainWindow extends JFrame
             @Override
             public void keyPressed(KeyEvent e)
             {
-                world.rysuj2(getContentPane().getGraphics());
+                Graphics g = getContentPane().getGraphics();
+                world.nextTurn();
+                g.clearRect(0,0, world.getWidth(), world.getHeight());
+                world.draw(getContentPane().getGraphics());
             }
         });
 
@@ -33,9 +36,7 @@ public class MainWindow extends JFrame
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                System.out.print(e.getX());
-                System.out.print(" ");
-                System.out.print(e.getY());
+                System.out.print(e.getX() + " " + e.getY());
                 System.out.println();
             }
         });

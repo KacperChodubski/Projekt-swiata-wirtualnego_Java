@@ -1,6 +1,6 @@
 package fajen;
 
-import fajen.Organisms.Sheep;
+import fajen.Organisms.Ship;
 
 import java.awt.*;
 
@@ -13,9 +13,9 @@ public class Main
         World world = new World();
         short sizeOfTile = (short) (MAIN_WINDOW_DIMENSION.height / world.map.getSizeY());
         world.setSizeOfTile(sizeOfTile);
-        Sheep sheep = new Sheep(world, new Point(0, 0));
-        Sheep sheep2 = new Sheep(world, new Point(1, 1));
-        Sheep sheep3 = new Sheep(world, new Point(2, 1));
+        Ship ship = new Ship(world, new Point(0, 0));
+        Ship ship2 = new Ship(world, new Point(1, 1));
+        //Ship ship3 = new Ship(world, new Point(1, 1));
         MainWindow mainWindow = new MainWindow(MAIN_WINDOW_DIMENSION, world);
     }
 }

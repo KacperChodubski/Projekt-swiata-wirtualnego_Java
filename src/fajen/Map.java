@@ -35,9 +35,13 @@ public class Map
         sizeY = y;
     }
 
-    public void setOrganismOnTile (short x, short y, Organism org)
+    public Organism getOrganismFromTile (Point position)
     {
-        this.mapOfOrganism[x][y] = org;
+        return mapOfOrganism[position.x][position.y];
+    }
+    public void setOrganismOnTile (Point position, Organism org)
+    {
+        mapOfOrganism[position.x][position.y] = org;
     }
 
     public void moveOrganism (Organism organism, Point newPosition)

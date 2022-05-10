@@ -6,6 +6,15 @@ import java.awt.*;
 
 abstract public class Organism
 {
+    protected static final short N = 0;
+    protected static final short NE = 1;
+    protected static final short E = 2;
+    protected static final short SE = 3;
+    protected static final short S = 4;
+    protected static final short SW = 5;
+    protected static final short W = 6;
+    protected static final short NW = 7;
+
     public Color getColorOfTile()
     {
         return colorOfTile;
@@ -76,13 +85,21 @@ abstract public class Organism
         this.position = position;
     }
 
+
+    //Stats
     protected short strength;
     protected short dexterity;
-    protected short lifeTime;
-    protected boolean horny;
-    protected boolean alive;
+
+    //Informations
+    protected short lifeTime = 0;
+    protected boolean horny = false;
+    protected boolean alive = true;
     protected Point position;
+
+    //Graphic
     protected Color colorOfTile;
+
+    //World
     protected World world;
 
     public void draw(Graphics g, Dimension dimension)
@@ -91,7 +108,7 @@ abstract public class Organism
         g.fillRect(position.x * world.getSizeOfTile(), position.y * world.getSizeOfTile(), dimension.width, dimension.height);
     }
 
-    abstract void action();
+    abstract public void action();
 
     public void dying()
     {

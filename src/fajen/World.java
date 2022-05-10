@@ -9,17 +9,6 @@ import java.util.ArrayList;
 public class World extends JPanel
 {
 
-    public short getSizeOfTile()
-    {
-        return sizeOfTile;
-    }
-
-    public void setSizeOfTile(short sizeOfTile)
-    {
-        this.sizeOfTile = sizeOfTile;
-    }
-
-    private short sizeOfTile;
     public World()
     {
         listOfOrganisms = new ArrayList<Organism>();
@@ -31,6 +20,17 @@ public class World extends JPanel
         listOfOrganisms = new ArrayList<Organism>();
         map = new Map(x, y);
     }
+    public short getSizeOfTile()
+    {
+        return sizeOfTile;
+    }
+
+    public void setSizeOfTile(short sizeOfTile)
+    {
+        this.sizeOfTile = sizeOfTile;
+    }
+
+    private short sizeOfTile;
 
     public Map map;
     public ArrayList <Organism> listOfOrganisms;
@@ -44,8 +44,27 @@ public class World extends JPanel
         }
     }
 
+    boolean addOrganism (Organism organism)
+    {
+        if (map.getOrganismFromTile(organism.getPosition()) == null)
+        {
+            map.setOrganismOnTile(organism.getPosition(), organism);
+            this.listOfOrganisms.add(organism);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-
+    void nextTurn()
+    {
+        for (Organism org: listOfOrganisms)
+        {
+            org.action();
+        }
+    }
 
 
     @Override
