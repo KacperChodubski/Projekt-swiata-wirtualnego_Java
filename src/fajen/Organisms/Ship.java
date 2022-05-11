@@ -15,27 +15,6 @@ public class Ship extends Animal
         this.colorOfTile = Color.GRAY;
         this.world = world;
         this.position = position;
-        //world.listOfOrganisms.add(this);
-        //world.map.setOrganismOnTile(position, this); // do wyjebania bo bedzie zle
-    }
-
-
-    @Override
-    void collision(Organism organism)
-    {
-
-    }
-
-    @Override
-    boolean attack(Organism organism)
-    {
-        return false;
-    }
-
-    @Override
-    boolean defence(Organism organism)
-    {
-        return false;
     }
 
     @Override

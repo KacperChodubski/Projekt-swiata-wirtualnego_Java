@@ -122,7 +122,18 @@ abstract public class Organism implements Comparable<Organism>
         this.position = position;
     }
 
-    public void fight(Organism organism){};
+    public void fight(Organism attackingOrganism, Organism defendingOrganism)
+    {
+        System.out.print("Walka - ");
+        System.out.print("Atakujacy: " + attackingOrganism.getClass().getSimpleName());
+        System.out.print(" Broniacy: " + defendingOrganism.getClass().getSimpleName());
+        System.out.println();
+        boolean attackResult = attackingOrganism.attack(defendingOrganism);
+        if (attackResult && attackingOrganism.isAlive())
+        {
+            defendingOrganism.defence(attackingOrganism);
+        }
+    };
 
     abstract void collision(Organism organism);
     abstract boolean attack(Organism organism);

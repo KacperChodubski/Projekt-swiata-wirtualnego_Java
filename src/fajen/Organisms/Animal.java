@@ -29,28 +29,15 @@ abstract public class Animal extends Organism
         if (this.world.map.getOrganismFromTile(nextPosition) != null)
         {
             Organism orgOnPosToMove = this.world.map.getOrganismFromTile(nextPosition);
-            if (this.getClass().isInstance(orgOnPosToMove))
-            {
-                reproduce(orgOnPosToMove);
-            }
-            else
-            {
-
-            }
+            collision(orgOnPosToMove);
         }
         else
         {
             this.world.map.moveOrganism(this, nextPosition);
-            if (nextPosition.x > world.map.getSizeX() || nextPosition.y > world.map.getSizeY())
-            {
-                System.out.println("chuj");
-            }
             this.position = nextPosition;
         }
 
     }
-
-
 
     private Point positionAfterMovement()
     {
@@ -133,6 +120,9 @@ abstract public class Animal extends Organism
         boolean atleastOneAvailableField = false;
         int pos_x = this.position.x;
         int pos_y = this.position.y;
+
+        //arrey list
+
         for (int x = 0; x < availableFields.length; x++)
         {
             for (int y = 0; y < availableFields.length; y++)
@@ -140,9 +130,9 @@ abstract public class Animal extends Organism
                 availableFields[x][y] = new booleanPoint();
                 availableFields[x][y].point.x = this.position.x - BASIC_REPRODUCE_RANGE + x;
                 availableFields[x][y].point.y = this.position.y - BASIC_REPRODUCE_RANGE + y;
-                boolean xInBorad = availableFields[x][y].point.x < this.world.map.getSizeX() && availableFields[x][y].point.x >= 0;
-                boolean yInBorad = availableFields[x][y].point.y < this.world.map.getSizeY() && availableFields[x][y].point.y >= 0;
-                if (xInBorad && yInBorad && this.world.map.getOrganismFromTile(availableFields[x][y].point) == null )
+                boolean xInBoard = availableFields[x][y].point.x < this.world.map.getSizeX() && availableFields[x][y].point.x >= 0;
+                boolean yInBoard = availableFields[x][y].point.y < this.world.map.getSizeY() && availableFields[x][y].point.y >= 0;
+                if (xInBoard && yInBoard && this.world.map.getOrganismFromTile(availableFields[x][y].point) == null )
                 {
                     availableFields[x][y].bool = true;
                     atleastOneAvailableField = true;
@@ -169,6 +159,34 @@ abstract public class Animal extends Organism
                 return true;
             }
         }
+        return false;
+    }
+
+
+    @Override
+    void collision(Organism organism)
+    {
+        if (this.getClass().isInstance(organism))
+        {
+            reproduce(organism);
+        }
+        else
+        {
+            fight(this, organism);
+        }
+    }
+
+
+
+    @Override
+    boolean attack(Organism organism)
+    {
+        return false;
+    }
+
+    @Override
+    boolean defence(Organism organism)
+    {
         return false;
     }
 
