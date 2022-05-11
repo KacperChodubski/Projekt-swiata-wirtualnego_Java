@@ -15,8 +15,8 @@ public class Ship extends Animal
         this.colorOfTile = Color.GRAY;
         this.world = world;
         this.position = position;
-        world.listOfOrganisms.add(this);
-        world.map.setOrganismOnTile(position, this); // do wyjebania bo bedzie zle
+        //world.listOfOrganisms.add(this);
+        //world.map.setOrganismOnTile(position, this); // do wyjebania bo bedzie zle
     }
 
 
@@ -37,4 +37,11 @@ public class Ship extends Animal
     {
         return false;
     }
+
+    @Override
+    protected Organism cloning(Point position)
+    {
+        return new Ship(this.world, position);
+    }
+
 }

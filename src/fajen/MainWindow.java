@@ -24,10 +24,10 @@ public class MainWindow extends JFrame
             @Override
             public void keyPressed(KeyEvent e)
             {
-                Graphics g = getContentPane().getGraphics();
+                Graphics g = world.getGraphics();
                 world.nextTurn();
-                g.clearRect(0,0, world.getWidth(), world.getHeight());
-                world.draw(getContentPane().getGraphics());
+                repaint();
+                world.draw(world.getGraphics());
             }
         });
 

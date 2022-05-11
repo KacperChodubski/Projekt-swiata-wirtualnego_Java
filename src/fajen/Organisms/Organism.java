@@ -4,7 +4,7 @@ import fajen.World;
 
 import java.awt.*;
 
-abstract public class Organism
+abstract public class Organism implements Comparable<Organism>
 {
     protected static final short N = 0;
     protected static final short NE = 1;
@@ -122,8 +122,26 @@ abstract public class Organism
         this.position = position;
     }
 
-    abstract void collision(Organism organism);
     public void fight(Organism organism){};
+
+    abstract void collision(Organism organism);
     abstract boolean attack(Organism organism);
     abstract boolean defence(Organism organism);
+
+    abstract protected Organism cloning (Point position);
+
+    @Override
+    public int compareTo(Organism org)
+    {
+        int lifeTimeCompere;
+        int dexterityCompere;
+        if (org.getDexterity() - this.getDexterity() != 0)
+        {
+            return org.getDexterity() - this.getDexterity();
+        }
+        else
+        {
+            return org.getLifeTime() - this.getLifeTime();
+        }
+    }
 }

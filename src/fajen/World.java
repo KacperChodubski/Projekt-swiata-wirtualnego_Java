@@ -3,23 +3,29 @@ package fajen;
 import fajen.Organisms.Organism;
 
 import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.PriorityQueue;
+import java.util.Random;
 
 public class World extends JPanel
 {
 
     public World()
     {
-        listOfOrganisms = new ArrayList<Organism>();
+        listOfOrganisms = new PriorityQueue<Organism>();
         map = new Map();
     }
 
     public World(short x, short y)
     {
-        listOfOrganisms = new ArrayList<Organism>();
+        listOfOrganisms = new PriorityQueue<Organism>();
         map = new Map(x, y);
     }
+
     public short getSizeOfTile()
     {
         return sizeOfTile;
@@ -33,7 +39,7 @@ public class World extends JPanel
     private short sizeOfTile;
 
     public Map map;
-    public ArrayList <Organism> listOfOrganisms;
+    public PriorityQueue<Organism> listOfOrganisms;
 
 
     void draw(Graphics g)
@@ -44,7 +50,7 @@ public class World extends JPanel
         }
     }
 
-    boolean addOrganism (Organism organism)
+    public boolean addOrganism (Organism organism)
     {
         if (map.getOrganismFromTile(organism.getPosition()) == null)
         {
@@ -60,9 +66,13 @@ public class World extends JPanel
 
     void nextTurn()
     {
-        for (Organism org: listOfOrganisms)
+        Object[] arr =  listOfOrganisms.toArray();
+        for (int i = 0; i < arr.length; i++)
         {
-            org.action();
+            if(arr[i] instanceof Organism organism)
+            {
+                organism.action();
+            }
         }
     }
 
@@ -75,10 +85,4 @@ public class World extends JPanel
         draw(g);
     }
 
-
-    void rysuj2(Graphics g)
-    {
-        g.setColor(Color.BLUE);
-        g.fillRect(200, 200, 200, 200);
-    }
 }
