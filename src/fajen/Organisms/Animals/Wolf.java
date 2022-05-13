@@ -1,5 +1,7 @@
-package fajen.Organisms;
+package fajen.Organisms.Animals;
 
+import fajen.Organisms.Animal;
+import fajen.Organisms.Organism;
 import fajen.World;
 
 import java.awt.*;
@@ -13,7 +15,7 @@ public class Wolf extends Animal
 
     public Wolf(World world, Point position)
     {
-        super(STRENGTH, DEXTERITY, COLOR, position);
+        super(world, STRENGTH, DEXTERITY, COLOR, position);
     }
 
     @Override

@@ -9,16 +9,17 @@ import java.awt.event.MouseEvent;
 
 public class MainWindow extends JFrame
 {
+    private static final int magicHeight = 15;
+    private static final int magicWidth = 13;
     public static final String MAIN_WINDOW_TITLE = "Fajen okno";
     public MainWindow(Dimension dimension, World world)
     {
         setSize(dimension);
+        getContentPane().setBackground(Color.decode("#383838"));
         setTitle(MAIN_WINDOW_TITLE);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //world.setBounds(new Rectangle(0, 0, 300, 300));
-        add(world);
+        world.setBounds(world.MARGIN - magicWidth, world.MARGIN - magicHeight, world.getWorldDimension().width, world.getWorldDimension().height);
         addKeyListener(new KeyAdapter()
         {
             @Override
@@ -26,10 +27,12 @@ public class MainWindow extends JFrame
             {
                 Graphics g = world.getGraphics();
                 world.nextTurn();
-                repaint();
-                world.draw(world.getGraphics());
+                world.repaint();
+                world.draw(g);
             }
         });
+        add(world);
+        world.setVisible(true);
 
         getContentPane().addMouseListener(new MouseAdapter()
         {
@@ -41,7 +44,7 @@ public class MainWindow extends JFrame
             }
         });
 
-
+        setLayout(null);
         setVisible(true);
     }
 }

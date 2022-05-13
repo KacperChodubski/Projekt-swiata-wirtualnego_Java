@@ -1,5 +1,7 @@
 package fajen.Organisms;
 
+import fajen.Organisms.Organism;
+import fajen.World;
 import fajen.booleanPoint;
 
 import java.awt.*;
@@ -13,9 +15,9 @@ abstract public class Animal extends Organism
 
     protected short movementRange = BASIC_MOVEMENT_RANGE;
 
-    Animal(short strength, short dexterity, Color color, Point position)
+    protected Animal(World world, short strength, short dexterity, Color color, Point position)
     {
-        super(strength, dexterity, color, position);
+        super(world, strength, dexterity, color, position);
     }
 
     @Override
@@ -36,6 +38,10 @@ abstract public class Animal extends Organism
         {
             Organism orgOnPosToMove = this.world.map.getOrganismFromTile(nextPosition);
             collision(orgOnPosToMove);
+            if (this.world.map.getOrganismFromTile(nextPosition) == null)
+            {
+                this.moveOnPosition(nextPosition);
+            }
         }
         else
         {
@@ -91,7 +97,7 @@ abstract public class Animal extends Organism
 
     private Point selectingPositionOfBirth()
     {
-        ArrayList<Point> availableFields = gettingAvailableFieldsToBirth();
+        ArrayList<Point> availableFields = gettingAvailableFields(BASIC_REPRODUCE_RANGE);
         if (availableFields.size() == 0)
         {
             return null;
@@ -101,27 +107,12 @@ abstract public class Animal extends Organism
         return availableFields.get(randomPoint);
     }
 
-    private ArrayList<Point> gettingAvailableFieldsToBirth ()
-    {
-        ArrayList<Point> availableFields = new ArrayList<Point>();
-
-        for (int x = -BASIC_REPRODUCE_RANGE; x <= BASIC_REPRODUCE_RANGE; x++)
-        {
-            for (int y = -BASIC_REPRODUCE_RANGE; y <= BASIC_REPRODUCE_RANGE; y++)
-            {
-                Point tileToBeChecked = new Point(this.position.x + x, this.position.y + y);
-                if (world.map.isInBoard(tileToBeChecked) && world.map.getOrganismFromTile(tileToBeChecked) == null)
-                {
-                    availableFields.add(tileToBeChecked);
-                }
-            }
-        }
-        return availableFields;
-    }
-
     private boolean movementValidation(Point position)
     {
-
+        if(this.position.equals(position))
+        {
+            return false;
+        }
         if (!this.world.map.isInBoard(position))
         {
             return false;
@@ -131,8 +122,7 @@ abstract public class Animal extends Organism
     }
 
 
-    @Override
-    void collision(Organism organism)
+    private void collision(Organism organism)
     {
         if (this.getClass().isInstance(organism))
         {
@@ -144,34 +134,5 @@ abstract public class Animal extends Organism
         }
     }
 
-
-
-    @Override
-    boolean attack(Organism defendingOrganism)
-    {
-        if (this.strength >= defendingOrganism.getStrength())
-        {
-            return true;
-        }
-        else
-        {
-            this.dying();
-            return false;
-        }
-    }
-
-    @Override
-    boolean defence(Organism attackingOrganism)
-    {
-        if (this.strength < attackingOrganism.getStrength())
-        {
-            this.dying();
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
 
 }

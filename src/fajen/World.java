@@ -1,18 +1,34 @@
 package fajen;
 
+import fajen.Organisms.Animals.Bubal;
 import fajen.Organisms.Organism;
 
 import javax.swing.*;
-import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
-import java.lang.reflect.Array;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class World extends JPanel
 {
+
+    public Dimension getWorldDimension()
+    {
+        return worldDimension;
+    }
+
+    public void setWorldDimension(Dimension dimension)
+    {
+        this.worldDimension.height = dimension.height - 2 * MARGIN;
+        this.worldDimension.width = dimension.width - 2 * MARGIN;
+    }
+
+    private Dimension worldDimension = new Dimension();
+    public short MARGIN = 50;
 
     public World()
     {
@@ -42,17 +58,18 @@ public class World extends JPanel
     public PriorityQueue<Organism> listOfOrganisms;
 
 
+
     void draw(Graphics g)
     {
         for (Organism org: listOfOrganisms)
         {
-            org.draw(g, new Dimension(sizeOfTile, sizeOfTile));
+            org.draw(new Dimension(sizeOfTile, sizeOfTile), g);
         }
     }
 
     public boolean addOrganism (Organism organism)
     {
-        if (map.getOrganismFromTile(organism.getPosition()) == null)
+        if (map.isInBoard(organism.getPosition()) && map.getOrganismFromTile(organism.getPosition()) == null)
         {
             map.setOrganismOnTile(organism.getPosition(), organism);
             this.listOfOrganisms.add(organism);
@@ -77,6 +94,13 @@ public class World extends JPanel
                 }
             }
         }
+    }
+
+    private void createRandomWorld()
+    {
+        ArrayList<Organism> listOfAllOrganisms = new ArrayList<Organism>();
+        listOfAllOrganisms.add(new Bubal(this, new Point(0,0)));
+
     }
 
 

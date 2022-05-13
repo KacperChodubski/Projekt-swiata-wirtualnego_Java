@@ -3,6 +3,7 @@ package fajen.Organisms;
 import fajen.World;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 abstract public class Organism implements Comparable<Organism>
 {
@@ -77,8 +78,9 @@ abstract public class Organism implements Comparable<Organism>
         this.position = position;
     }
 
-    Organism(short strength, short dexterity, Color color, Point position)
+    protected Organism(World world, short strength, short dexterity, Color color, Point position)
     {
+        this.world = world;
         this.strength = strength;
         this.dexterity = dexterity;
         this.position = position;
@@ -101,7 +103,7 @@ abstract public class Organism implements Comparable<Organism>
     //World
     protected World world;
 
-    public void draw(Graphics g, Dimension dimension)
+    public void draw(Dimension dimension, Graphics g)
     {
         g.setColor(this.colorOfTile);
         g.fillRect(position.x * world.getSizeOfTile(), position.y * world.getSizeOfTile(), dimension.width, dimension.height);
@@ -136,9 +138,46 @@ abstract public class Organism implements Comparable<Organism>
         }
     }
 
-    abstract void collision(Organism organism);
-    abstract boolean attack(Organism defendingOrganism);
-    abstract boolean defence(Organism attackingOrganism);
+
+
+    boolean attack(Organism defendingOrganism)
+    {
+        if (this.strength >= defendingOrganism.getStrength())
+        {
+            return true;
+        }
+        else
+        {
+            this.dying();
+            return false;
+        }
+    }
+
+    boolean defence(Organism attackingOrganism)
+    {
+        if (this.strength < attackingOrganism.getStrength())
+        {
+            if (this instanceof IJumper && ((IJumper) this).escape())
+            {
+                return true;
+            }
+            if (this instanceof IToxic)
+            {
+                attackingOrganism.dying();
+                return true;
+            }
+            if (this instanceof ISteroid)
+            {
+                ((ISteroid) this).boost(attackingOrganism);
+            }
+            this.dying();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 
     abstract protected Organism cloning (Point position);
 
@@ -153,5 +192,23 @@ abstract public class Organism implements Comparable<Organism>
         {
             return org.getLifeTime() - this.getLifeTime();
         }
+    }
+
+    protected ArrayList<Point> gettingAvailableFields (short range)
+    {
+        ArrayList<Point> availableFields = new ArrayList<Point>();
+
+        for (int x = -range; x <= range; x++)
+        {
+            for (int y = -range; y <= range; y++)
+            {
+                Point tileToBeChecked = new Point(this.position.x + x, this.position.y + y);
+                if (world.map.isInBoard(tileToBeChecked) && world.map.getOrganismFromTile(tileToBeChecked) == null)
+                {
+                    availableFields.add(tileToBeChecked);
+                }
+            }
+        }
+        return availableFields;
     }
 }
