@@ -23,7 +23,7 @@ public class Bubal extends Animal implements IJumper
     }
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new Bubal(this.world, position);
     }

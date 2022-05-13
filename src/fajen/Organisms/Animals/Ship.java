@@ -18,7 +18,7 @@ public class Ship extends Animal
     }
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new Ship(this.world, position);
     }

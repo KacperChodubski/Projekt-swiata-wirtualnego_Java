@@ -17,7 +17,7 @@ public class Grass extends Plant
 
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new Grass(this.world, position);
     }

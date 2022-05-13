@@ -1,7 +1,8 @@
 package fajen;
 
-import fajen.Organisms.Animals.Bubal;
+import fajen.Organisms.Animals.*;
 import fajen.Organisms.Organism;
+import fajen.Organisms.Plants.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +11,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class World extends JPanel
 {
+
+    private static final int MAX_RANDOM_ANIMALS = 5;
 
     public Dimension getWorldDimension()
     {
@@ -34,25 +38,27 @@ public class World extends JPanel
     {
         listOfOrganisms = new PriorityQueue<Organism>();
         map = new Map();
+        createRandomWorld();
     }
 
     public World(short x, short y)
     {
         listOfOrganisms = new PriorityQueue<Organism>();
         map = new Map(x, y);
+        createRandomWorld();
     }
 
-    public short getSizeOfTile()
+    public Dimension getSizeOfTile()
     {
         return sizeOfTile;
     }
 
-    public void setSizeOfTile(short sizeOfTile)
+    public void setSizeOfTile(Dimension sizeOfTile)
     {
         this.sizeOfTile = sizeOfTile;
     }
 
-    private short sizeOfTile;
+    private Dimension sizeOfTile;
 
     public Map map;
     public PriorityQueue<Organism> listOfOrganisms;
@@ -63,7 +69,7 @@ public class World extends JPanel
     {
         for (Organism org: listOfOrganisms)
         {
-            org.draw(new Dimension(sizeOfTile, sizeOfTile), g);
+            org.draw(sizeOfTile, g);
         }
     }
 
@@ -100,6 +106,28 @@ public class World extends JPanel
     {
         ArrayList<Organism> listOfAllOrganisms = new ArrayList<Organism>();
         listOfAllOrganisms.add(new Bubal(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Ship(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Wolf(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Fox(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Tortoise(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Grass(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Guarana(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Milt(this, new Point(0,0)));
+        listOfAllOrganisms.add(new SosnowskiBorcht(this, new Point(0,0)));
+        listOfAllOrganisms.add(new WolfBerry(this, new Point(0,0)));
+
+        for (int i = 0; i < listOfAllOrganisms.size(); i++)
+        {
+            Random r = new Random();
+            int numberOfAnimalsOfOneType = r.nextInt(MAX_RANDOM_ANIMALS + 1);
+            for (int j = 0; j < numberOfAnimalsOfOneType; j++)
+            {
+                short randX = (short) (r.nextInt(this.map.getSizeX()));
+                short randY = (short) (r.nextInt(this.map.getSizeY()));
+                Point randPosition = new Point(randX, randY);
+                addOrganism(listOfAllOrganisms.get(i).cloning(randPosition));
+            }
+        }
 
     }
 

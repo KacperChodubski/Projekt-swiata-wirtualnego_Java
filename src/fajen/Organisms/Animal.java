@@ -109,11 +109,15 @@ abstract public class Animal extends Organism
 
     private boolean movementValidation(Point position)
     {
+        if (!this.world.map.isInBoard(position))
+        {
+            return false;
+        }
         if(this.position.equals(position))
         {
             return false;
         }
-        if (!this.world.map.isInBoard(position))
+        if (this instanceof ISmart && !((ISmart) this).isThisSmartMove(position))
         {
             return false;
         }

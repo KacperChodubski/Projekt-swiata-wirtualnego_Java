@@ -19,7 +19,7 @@ public class Guarana extends Plant implements ISteroid
 
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new Guarana(this.world, position);
     }

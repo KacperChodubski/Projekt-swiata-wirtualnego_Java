@@ -106,7 +106,7 @@ abstract public class Organism implements Comparable<Organism>
     public void draw(Dimension dimension, Graphics g)
     {
         g.setColor(this.colorOfTile);
-        g.fillRect(position.x * world.getSizeOfTile(), position.y * world.getSizeOfTile(), dimension.width, dimension.height);
+        g.fillRect(position.x * world.getSizeOfTile().width, position.y * world.getSizeOfTile().height, dimension.width, dimension.height);
     }
 
     abstract public void action();
@@ -170,6 +170,10 @@ abstract public class Organism implements Comparable<Organism>
             {
                 ((ISteroid) this).boost(attackingOrganism);
             }
+            if (this instanceof IShelly && ((IShelly) this).deflect(attackingOrganism))
+            {
+                return true;
+            }
             this.dying();
             return false;
         }
@@ -179,7 +183,7 @@ abstract public class Organism implements Comparable<Organism>
         }
     }
 
-    abstract protected Organism cloning (Point position);
+    abstract public Organism cloning (Point position);
 
     @Override
     public int compareTo(Organism org)

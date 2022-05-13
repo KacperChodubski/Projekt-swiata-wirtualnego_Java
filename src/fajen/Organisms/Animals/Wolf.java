@@ -19,7 +19,7 @@ public class Wolf extends Animal
     }
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new Wolf(this.world, position);
     }

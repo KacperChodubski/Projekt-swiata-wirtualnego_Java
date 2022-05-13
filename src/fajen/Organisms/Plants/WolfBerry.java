@@ -20,7 +20,7 @@ public class WolfBerry extends Plant implements IToxic
 
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new WolfBerry(this.world, position);
     }

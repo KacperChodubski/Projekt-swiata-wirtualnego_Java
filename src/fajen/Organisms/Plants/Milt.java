@@ -19,7 +19,7 @@ public class Milt extends Plant implements IMad
 
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new Milt(this.world, position);
     }

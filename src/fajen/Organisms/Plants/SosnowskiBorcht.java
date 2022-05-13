@@ -21,7 +21,7 @@ public class SosnowskiBorcht extends Plant implements IToxic
 
 
     @Override
-    protected Organism cloning(Point position)
+    public Organism cloning(Point position)
     {
         return new SosnowskiBorcht(this.world, position);
     }
