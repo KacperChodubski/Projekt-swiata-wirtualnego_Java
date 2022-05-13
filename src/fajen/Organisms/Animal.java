@@ -3,6 +3,7 @@ package fajen.Organisms;
 import fajen.booleanPoint;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 abstract public class Animal extends Organism
@@ -11,6 +12,11 @@ abstract public class Animal extends Organism
     private static final short BASIC_REPRODUCE_RANGE = 1;
 
     protected short movementRange = BASIC_MOVEMENT_RANGE;
+
+    Animal(short strength, short dexterity, Color color, Point position)
+    {
+        super(strength, dexterity, color, position);
+    }
 
     @Override
     public void action()
@@ -33,8 +39,7 @@ abstract public class Animal extends Organism
         }
         else
         {
-            this.world.map.moveOrganism(this, nextPosition);
-            this.position = nextPosition;
+            this.moveOnPosition(nextPosition);
         }
 
     }
@@ -42,40 +47,29 @@ abstract public class Animal extends Organism
     private Point positionAfterMovement()
     {
         Point nextPosition;
-        do
+        ArrayList<Point> availableTiles =  new ArrayList<Point>();
+        nextPosition = new Point(position);
+        Random r = new Random();
+        for (int x = -movementRange; x <= movementRange; x++)
         {
-            nextPosition = new Point(position);
-            Random r = new Random();
-            short direction = (short)(r.nextInt(8));
-            switch (direction)
+            for (int y = -movementRange; y <= movementRange; y++)
             {
-                case N -> nextPosition.y -= this.movementRange;
-                case NE ->
+                Point tileToBeChecked = new Point(this.position.x + x, this.position.y + y);
+
+                if (movementValidation(tileToBeChecked))
                 {
-                    nextPosition.y -= this.movementRange;
-                    nextPosition.x += this.movementRange;
+                    availableTiles.add(tileToBeChecked);
                 }
-                case E -> nextPosition.x += this.movementRange;
-                case SE ->
-                {
-                    nextPosition.y += this.movementRange;
-                    nextPosition.x += this.movementRange;
-                }
-                case S -> nextPosition.y += this.movementRange;
-                case SW ->
-                {
-                    nextPosition.y += this.movementRange;
-                    nextPosition.x -= this.movementRange;
-                }
-                case W -> nextPosition.x -= this.movementRange;
-                case NW ->
-                {
-                    nextPosition.y -= this.movementRange;
-                    nextPosition.x -= this.movementRange;
-                }
-                default -> System.err.println("Nieznany kierunek");
             }
-        } while (!this.movementValidation(nextPosition));
+        }
+
+        if (availableTiles.size() == 0)
+        {
+            return null;
+        }
+
+        nextPosition = availableTiles.get(r.nextInt(availableTiles.size()));
+
         return nextPosition;
     }
 
@@ -97,69 +91,43 @@ abstract public class Animal extends Organism
 
     private Point selectingPositionOfBirth()
     {
-        booleanPoint[][] availableFields = gettingAvailableFieldsToBirth();
-        if (availableFields == null)
+        ArrayList<Point> availableFields = gettingAvailableFieldsToBirth();
+        if (availableFields.size() == 0)
         {
             return null;
         }
         Random r = new Random();
-        int randX;
-        int randY;
-
-        do
-        {
-            randX = r.nextInt(availableFields.length);
-            randY = r.nextInt(availableFields[randX].length);
-        }while (!availableFields[randX][randY].bool);
-        return availableFields[randX][randY].point;
+        int randomPoint = r.nextInt(availableFields.size());
+        return availableFields.get(randomPoint);
     }
 
-    private booleanPoint[][] gettingAvailableFieldsToBirth ()
+    private ArrayList<Point> gettingAvailableFieldsToBirth ()
     {
-        booleanPoint[][] availableFields = new booleanPoint[BASIC_REPRODUCE_RANGE*2 + 1][BASIC_REPRODUCE_RANGE*2 + 1];
-        boolean atleastOneAvailableField = false;
-        int pos_x = this.position.x;
-        int pos_y = this.position.y;
+        ArrayList<Point> availableFields = new ArrayList<Point>();
 
-        //arrey list
-
-        for (int x = 0; x < availableFields.length; x++)
+        for (int x = -BASIC_REPRODUCE_RANGE; x <= BASIC_REPRODUCE_RANGE; x++)
         {
-            for (int y = 0; y < availableFields.length; y++)
+            for (int y = -BASIC_REPRODUCE_RANGE; y <= BASIC_REPRODUCE_RANGE; y++)
             {
-                availableFields[x][y] = new booleanPoint();
-                availableFields[x][y].point.x = this.position.x - BASIC_REPRODUCE_RANGE + x;
-                availableFields[x][y].point.y = this.position.y - BASIC_REPRODUCE_RANGE + y;
-                boolean xInBoard = availableFields[x][y].point.x < this.world.map.getSizeX() && availableFields[x][y].point.x >= 0;
-                boolean yInBoard = availableFields[x][y].point.y < this.world.map.getSizeY() && availableFields[x][y].point.y >= 0;
-                if (xInBoard && yInBoard && this.world.map.getOrganismFromTile(availableFields[x][y].point) == null )
+                Point tileToBeChecked = new Point(this.position.x + x, this.position.y + y);
+                if (world.map.isInBoard(tileToBeChecked) && world.map.getOrganismFromTile(tileToBeChecked) == null)
                 {
-                    availableFields[x][y].bool = true;
-                    atleastOneAvailableField = true;
-                }
-                else
-                {
-                    availableFields[x][y].bool = false;
+                    availableFields.add(tileToBeChecked);
                 }
             }
         }
-        if (atleastOneAvailableField)
-        {
-            return availableFields;
-        }
-        return null;
+        return availableFields;
     }
 
     private boolean movementValidation(Point position)
     {
-        if(position.x >= 0 && position.y >= 0)
+
+        if (!this.world.map.isInBoard(position))
         {
-            if(position.x < this.world.map.getSizeX() && position.y < this.world.map.getSizeY())
-            {
-                return true;
-            }
+            return false;
         }
-        return false;
+
+        return true;
     }
 
 
@@ -179,15 +147,31 @@ abstract public class Animal extends Organism
 
 
     @Override
-    boolean attack(Organism organism)
+    boolean attack(Organism defendingOrganism)
     {
-        return false;
+        if (this.strength >= defendingOrganism.getStrength())
+        {
+            return true;
+        }
+        else
+        {
+            this.dying();
+            return false;
+        }
     }
 
     @Override
-    boolean defence(Organism organism)
+    boolean defence(Organism attackingOrganism)
     {
-        return false;
+        if (this.strength < attackingOrganism.getStrength())
+        {
+            this.dying();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
 }

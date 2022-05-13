@@ -6,15 +6,13 @@ import java.awt.*;
 
 public class Ship extends Animal
 {
-    private static final short SHEEP_STRENGTH = 4;
-    private static final short SHEEP_DEXTERITY = 4;
+    private static final short STRENGTH = 4;
+    private static final short DEXTERITY = 4;
+    private static final Color COLOR = Color.GRAY;
+
     public Ship(World world, Point position)
     {
-        this.dexterity = SHEEP_DEXTERITY;
-        this.strength = SHEEP_STRENGTH;
-        this.colorOfTile = Color.GRAY;
-        this.world = world;
-        this.position = position;
+        super(STRENGTH, DEXTERITY, COLOR, position);
     }
 
     @Override

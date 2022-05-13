@@ -71,7 +71,10 @@ public class World extends JPanel
         {
             if(arr[i] instanceof Organism organism)
             {
-                organism.action();
+                if (organism.isAlive())
+                {
+                    organism.action();
+                }
             }
         }
     }

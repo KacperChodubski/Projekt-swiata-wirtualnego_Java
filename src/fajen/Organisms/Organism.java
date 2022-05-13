@@ -6,14 +6,6 @@ import java.awt.*;
 
 abstract public class Organism implements Comparable<Organism>
 {
-    protected static final short N = 0;
-    protected static final short NE = 1;
-    protected static final short E = 2;
-    protected static final short SE = 3;
-    protected static final short S = 4;
-    protected static final short SW = 5;
-    protected static final short W = 6;
-    protected static final short NW = 7;
 
     public Color getColorOfTile()
     {
@@ -85,6 +77,13 @@ abstract public class Organism implements Comparable<Organism>
         this.position = position;
     }
 
+    Organism(short strength, short dexterity, Color color, Point position)
+    {
+        this.strength = strength;
+        this.dexterity = dexterity;
+        this.position = position;
+        this.colorOfTile = color;
+    }
 
     //Stats
     protected short strength;
@@ -112,7 +111,9 @@ abstract public class Organism implements Comparable<Organism>
 
     public void dying()
     {
-
+        this.alive = false;
+        this.world.map.setOrganismOnTile(this.position, null);
+        this.world.listOfOrganisms.remove(this);
     }
 
     public void moveOnPosition(Point position)
@@ -133,19 +134,17 @@ abstract public class Organism implements Comparable<Organism>
         {
             defendingOrganism.defence(attackingOrganism);
         }
-    };
+    }
 
     abstract void collision(Organism organism);
-    abstract boolean attack(Organism organism);
-    abstract boolean defence(Organism organism);
+    abstract boolean attack(Organism defendingOrganism);
+    abstract boolean defence(Organism attackingOrganism);
 
     abstract protected Organism cloning (Point position);
 
     @Override
     public int compareTo(Organism org)
     {
-        int lifeTimeCompere;
-        int dexterityCompere;
         if (org.getDexterity() - this.getDexterity() != 0)
         {
             return org.getDexterity() - this.getDexterity();

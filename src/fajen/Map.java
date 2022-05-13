@@ -54,4 +54,9 @@ public class Map
         }
     }
 
+    public boolean isInBoard (Point p)
+    {
+        return p.x < sizeX && p.x >= 0 && p.y < sizeY && p.y >= 0;
+    }
+
 }
