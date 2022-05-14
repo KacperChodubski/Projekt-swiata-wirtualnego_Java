@@ -31,21 +31,23 @@ abstract public class Animal extends Organism
         this.lifeTime++;
     }
 
-    private void movement()
+    protected void movement()
     {
         Point nextPosition = this.positionAfterMovement();
-        if (this.world.map.getOrganismFromTile(nextPosition) != null)
+        if (nextPosition != null)
         {
-            Organism orgOnPosToMove = this.world.map.getOrganismFromTile(nextPosition);
-            collision(orgOnPosToMove);
-            if (this.world.map.getOrganismFromTile(nextPosition) == null)
+            if (this.world.map.getOrganismFromTile(nextPosition) != null)
+            {
+                Organism orgOnPosToMove = this.world.map.getOrganismFromTile(nextPosition);
+                collision(orgOnPosToMove);
+                if (this.world.map.getOrganismFromTile(nextPosition) == null)
+                {
+                    this.moveOnPosition(nextPosition);
+                }
+            } else
             {
                 this.moveOnPosition(nextPosition);
             }
-        }
-        else
-        {
-            this.moveOnPosition(nextPosition);
         }
 
     }

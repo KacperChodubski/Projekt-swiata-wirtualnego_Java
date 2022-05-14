@@ -10,7 +10,7 @@ abstract public class Plant extends Organism
 {
     private static final short BASIC_DEXTERITY = 0;
     private static final short BASIC_STRENGTH = 0;
-    private static final short BASIC_SPREAD_CHANCE = 50;
+    private static final short BASIC_SPREAD_CHANCE = 10;
     private static final short BASIC_SPREAD_RANGE = 1;
 
     protected Plant(World world, Color color, Point position)

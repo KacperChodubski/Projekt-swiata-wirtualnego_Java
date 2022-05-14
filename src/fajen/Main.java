@@ -11,12 +11,12 @@ import java.util.Set;
 
 public class Main
 {
-    public static Dimension MAIN_WINDOW_DIMENSION = new Dimension(1000, 1000);
+    public static Dimension MAIN_WINDOW_DIMENSION = new Dimension(800, 800);
 
     public static void main(String[] args)
     {
-        short h = 20;
-        short w = 20;
+        short h = 80;
+        short w = 80;
         World world = new World(w,h);
         world.setWorldDimension(MAIN_WINDOW_DIMENSION);
         int sizeOfTileY = world.getWorldDimension().height / world.map.getSizeY();

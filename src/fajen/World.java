@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class World extends JPanel
 {
 
-    private static final int MAX_RANDOM_ANIMALS = 5;
+    private static final int MAX_RANDOM_ANIMALS = 10;
 
     public Dimension getWorldDimension()
     {
@@ -114,7 +114,7 @@ public class World extends JPanel
         listOfAllOrganisms.add(new Guarana(this, new Point(0,0)));
         listOfAllOrganisms.add(new Milt(this, new Point(0,0)));
         listOfAllOrganisms.add(new SosnowskiBorcht(this, new Point(0,0)));
-        listOfAllOrganisms.add(new WolfBerry(this, new Point(0,0)));
+        //listOfAllOrganisms.add(new WolfBerry(this, new Point(0,0)));
 
         for (int i = 0; i < listOfAllOrganisms.size(); i++)
         {
