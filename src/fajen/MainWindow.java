@@ -26,6 +26,8 @@ public class MainWindow extends JFrame
             public void keyPressed(KeyEvent e)
             {
                 Graphics g = world.getGraphics();
+                world.setPressedKey(e);
+                //System.out.println(e);
                 world.nextTurn();
                 world.repaint();
                 world.draw(g);

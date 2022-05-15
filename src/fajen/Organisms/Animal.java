@@ -52,7 +52,7 @@ abstract public class Animal extends Organism
 
     }
 
-    private Point positionAfterMovement()
+    protected Point positionAfterMovement()
     {
         Point nextPosition;
         ArrayList<Point> availableTiles =  new ArrayList<Point>();
@@ -109,7 +109,7 @@ abstract public class Animal extends Organism
         return availableFields.get(randomPoint);
     }
 
-    private boolean movementValidation(Point position)
+    protected boolean movementValidation(Point position)
     {
         if (!this.world.map.isInBoard(position))
         {

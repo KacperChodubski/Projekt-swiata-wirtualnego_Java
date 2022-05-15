@@ -6,6 +6,7 @@ import fajen.Organisms.Plants.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,6 +33,18 @@ public class World extends JPanel
     }
 
     private Dimension worldDimension = new Dimension();
+
+    public KeyEvent getPressedKey()
+    {
+        return pressedKey;
+    }
+
+    public void setPressedKey(KeyEvent pressedKey)
+    {
+        this.pressedKey = pressedKey;
+    }
+
+    private KeyEvent pressedKey = null;
     public short MARGIN = 50;
 
     public World()
@@ -89,16 +102,12 @@ public class World extends JPanel
 
     void nextTurn()
     {
-        Object[] arr =  listOfOrganisms.toArray();
-        for (int i = 0; i < arr.length; i++)
+        PriorityQueue<Organism> arr =  new PriorityQueue<>(listOfOrganisms);
+        Organism org = arr.poll();
+        while (org != null)
         {
-            if(arr[i] instanceof Organism organism)
-            {
-                if (organism.isAlive())
-                {
-                    organism.action();
-                }
-            }
+            org.action();
+            org = arr.poll();
         }
     }
 
@@ -116,9 +125,9 @@ public class World extends JPanel
         listOfAllOrganisms.add(new SosnowskiBorcht(this, new Point(0,0)));
         //listOfAllOrganisms.add(new WolfBerry(this, new Point(0,0)));
 
+        Random r = new Random();
         for (int i = 0; i < listOfAllOrganisms.size(); i++)
         {
-            Random r = new Random();
             int numberOfAnimalsOfOneType = r.nextInt(MAX_RANDOM_ANIMALS + 1);
             for (int j = 0; j < numberOfAnimalsOfOneType; j++)
             {
@@ -128,6 +137,10 @@ public class World extends JPanel
                 addOrganism(listOfAllOrganisms.get(i).cloning(randPosition));
             }
         }
+        short randX = (short) (r.nextInt(this.map.getSizeX()));
+        short randY = (short) (r.nextInt(this.map.getSizeY()));
+        Point randPosition = new Point(randX, randY);
+        this.addOrganism(new Human(this, randPosition));
 
     }
 
