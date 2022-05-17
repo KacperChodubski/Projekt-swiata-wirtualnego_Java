@@ -5,7 +5,7 @@ import fajen.World;
 import java.awt.*;
 import java.util.ArrayList;
 
-abstract public class Organism implements Comparable<Organism>
+abstract public class Organism implements Comparable<Organism>, ICodable
 {
 
     public Color getColorOfTile()
@@ -18,32 +18,32 @@ abstract public class Organism implements Comparable<Organism>
         this.colorOfTile = colorOfTile;
     }
 
-    public short getStrength()
+    public int getStrength()
     {
         return strength;
     }
 
-    public void setStrength(short strength)
+    public void setStrength(int strength)
     {
         this.strength = strength;
     }
 
-    public short getDexterity()
+    public int getDexterity()
     {
         return dexterity;
     }
 
-    public void setDexterity(short dexterity)
+    public void setDexterity(int dexterity)
     {
         this.dexterity = dexterity;
     }
 
-    public short getLifeTime()
+    public int getLifeTime()
     {
         return lifeTime;
     }
 
-    public void setLifeTime(short lifeTime)
+    public void setLifeTime(int lifeTime)
     {
         this.lifeTime = lifeTime;
     }
@@ -88,11 +88,11 @@ abstract public class Organism implements Comparable<Organism>
     }
 
     //Stats
-    protected short strength;
-    protected short dexterity;
+    protected int strength;
+    protected int dexterity;
 
     //Informations
-    protected short lifeTime = 0;
+    protected int lifeTime = 0;
     protected boolean horny = false;
     protected boolean alive = true;
     protected Point position;
@@ -214,5 +214,28 @@ abstract public class Organism implements Comparable<Organism>
             }
         }
         return availableFields;
+    }
+
+    @Override
+    public void decode(String orgString)
+    {
+        String [] parameters = orgString.split(" ");
+        this.setPosition(new Point(Integer.parseInt(parameters[1]), Integer.parseInt(parameters[2])));
+        this.setStrength(Integer.parseInt(parameters[3]));
+        this.setLifeTime(Integer.parseInt(parameters[4]));
+    }
+
+    @Override
+    public String code ()
+    {
+        String encodedOrg;
+
+        encodedOrg = this.getClass().getSimpleName() + " ";
+        encodedOrg += this.position.x + " ";
+        encodedOrg += this.position.y + " ";
+        encodedOrg += this.strength + " ";
+        encodedOrg += this.lifeTime;
+
+        return encodedOrg;
     }
 }

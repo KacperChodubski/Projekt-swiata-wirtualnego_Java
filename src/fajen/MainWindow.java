@@ -1,5 +1,7 @@
 package fajen;
 
+import fajen.Organisms.Organism;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -31,18 +33,37 @@ public class MainWindow extends JFrame
                 world.nextTurn();
                 world.repaint();
                 world.draw(g);
+                if (e.getKeyChar() == 'r')
+                {
+                    world.readSave();
+                }
+                if (e.getKeyChar() == 's')
+                {
+                    world.save();
+                }
             }
         });
         add(world);
         world.setVisible(true);
 
-        getContentPane().addMouseListener(new MouseAdapter()
+        world.addMouseListener(new MouseAdapter()
         {
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                System.out.print(e.getX() + " " + e.getY());
-                System.out.println();
+                if (world.getSizeOfTile() != null)
+                {
+                    Point pos = new Point(e.getX() / world.getSizeOfTile().width, e.getY() / world.getSizeOfTile().height);
+                    Organism organism = world.map.getOrganismFromTile(pos);
+                    System.out.print(pos.x + " " + pos.y + " ");
+                    if (organism == null)
+                    {
+                        System.out.println("Pusty");
+                    } else
+                    {
+                        System.out.println(organism.getClass().getSimpleName());
+                    }
+                }
             }
         });
 

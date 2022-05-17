@@ -15,14 +15,11 @@ public class Main
 
     public static void main(String[] args)
     {
-        short h = 80;
-        short w = 80;
+        int h = 40;
+        int w = 40;
         World world = new World(w,h);
         world.setWorldDimension(MAIN_WINDOW_DIMENSION);
-        int sizeOfTileY = world.getWorldDimension().height / world.map.getSizeY();
-        int sizeOfTileX = world.getWorldDimension().width / world.map.getSizeX();
-        world.setSizeOfTile(new Dimension(sizeOfTileX, sizeOfTileY));
-
         MainWindow mainWindow = new MainWindow(MAIN_WINDOW_DIMENSION, world);
+        world.save();
     }
 }

@@ -9,17 +9,17 @@ public class Map
     private static final short DEFAULT_MAP_SIZE = 20;
     private Organism[][] mapOfOrganism;
 
-    public short getSizeY()
+    public int getSizeY()
     {
         return sizeY;
     }
-    public short getSizeX()
+    public int getSizeX()
     {
         return sizeX;
     }
 
-    private short sizeY;
-    private short sizeX;
+    private int sizeY;
+    private int sizeX;
 
     Map ()
     {
@@ -28,7 +28,7 @@ public class Map
         sizeX = DEFAULT_MAP_SIZE;
     }
 
-    Map(short y, short x)
+    Map(int x, int y)
     {
         this.mapOfOrganism = new Organism[x][y];
         sizeX = x;
