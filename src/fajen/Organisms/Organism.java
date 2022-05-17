@@ -198,6 +198,12 @@ abstract public class Organism implements Comparable<Organism>, ICodable
         }
     }
 
+    @Override
+    public String toString()
+    {
+        return this.getClass().getSimpleName();
+    }
+
     protected ArrayList<Point> gettingAvailableFields (short range)
     {
         ArrayList<Point> availableFields = new ArrayList<Point>();

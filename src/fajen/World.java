@@ -17,7 +17,7 @@ public class World extends JPanel
 {
 
     private static final int MAX_RANDOM_ANIMALS = 10;
-    private ArrayList<Organism> listOfAllOrganisms = new ArrayList<>();
+    public ArrayList<Organism> listOfAllOrganisms = new ArrayList<>();
 
     public Dimension getWorldDimension()
     {
@@ -46,7 +46,7 @@ public class World extends JPanel
     }
 
     private KeyEvent pressedKey = null;
-    public short MARGIN = 50;
+    public short MARGIN = 100;
 
     public World()
     {
