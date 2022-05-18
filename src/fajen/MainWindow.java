@@ -4,10 +4,7 @@ import fajen.Organisms.Organism;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class MainWindow extends JFrame
 {
@@ -20,18 +17,18 @@ public class MainWindow extends JFrame
 
     private static final int SAVE_BUTTON_WIDTH = 80;
     private static final int SAVE_BUTTON_HEIGHT = 40;
-    private static final int SAVE_BUTTON_X = 60;
+    private static final int SAVE_BUTTON_X = 100;
     private static final int SAVE_BUTTON_Y = 700;
 
-    private static final int NEXT_TURN_BUTTON_WIDTH = 70;
-    private static final int NEXT_TURN_BUTTON_HEIGHT = 25;
-    private static final int NEXT_TURN_BUTTON_X = 150;
-    private static final int NEXT_TURN_BUTTON_Y = 150;
+    private static final int NEXT_TURN_BUTTON_WIDTH = 80;
+    private static final int NEXT_TURN_BUTTON_HEIGHT = 40;
+    private static final int NEXT_TURN_BUTTON_X = 400;
+    private static final int NEXT_TURN_BUTTON_Y = 700;
 
-    private static final int LOAD_BUTTON_WIDTH = 70;
-    private static final int LOAD_BUTTON_HEIGHT = 25;
-    private static final int LOAD_BUTTON_X = 200;
-    private static final int LOAD_BUTTON_Y = 200;
+    private static final int LOAD_BUTTON_WIDTH = 80;
+    private static final int LOAD_BUTTON_HEIGHT = 40;
+    private static final int LOAD_BUTTON_X = 250;
+    private static final int LOAD_BUTTON_Y = 700;
 
     public static final String MAIN_WINDOW_TITLE = "Fajen okno";
     JComboBox <Organism> boxOfOrganisms;
@@ -47,8 +44,46 @@ public class MainWindow extends JFrame
         boxOfOrganisms.setBounds(dimension.width/2 - BOX_WIDTH/2, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
 
         JButton saveButton = new JButton("Save");
+        saveButton.setFocusable(false);
         saveButton.setBounds(SAVE_BUTTON_X, SAVE_BUTTON_Y, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
         add(saveButton);
+        saveButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                world.save();
+                world.draw(world.getGraphics());
+            }
+        });
+
+        JButton loadButton = new JButton("Load");
+        loadButton.setFocusable(false);
+        loadButton.setBounds(LOAD_BUTTON_X, LOAD_BUTTON_Y, LOAD_BUTTON_WIDTH, LOAD_BUTTON_HEIGHT);
+        add(loadButton);
+        loadButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                world.readSave();
+                world.draw(world.getGraphics());
+            }
+        });
+
+        JButton nextTurnButton = new JButton("Next turn");
+        nextTurnButton.setFocusable(false);
+        nextTurnButton.setBounds(NEXT_TURN_BUTTON_X, NEXT_TURN_BUTTON_Y, NEXT_TURN_BUTTON_WIDTH, NEXT_TURN_BUTTON_HEIGHT);
+        add(nextTurnButton);
+        nextTurnButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                world.nextTurn();
+                world.draw(world.getGraphics());
+            }
+        });
 
         getContentPane().add(boxOfOrganisms);
         setSize(dimension);
@@ -65,7 +100,7 @@ public class MainWindow extends JFrame
                 Graphics g = world.getGraphics();
                 world.setPressedKey(e);
                 world.nextTurn();
-                world.repaint();
+                world.setPressedKey(null);
                 world.draw(g);
                 if (e.getKeyChar() == 'r')
                 {

@@ -81,6 +81,7 @@ public class World extends JPanel
 
     void draw(Graphics g)
     {
+        this.repaint();
         for (Organism org: listOfOrganisms)
         {
             org.draw(sizeOfTile, g);
@@ -131,7 +132,6 @@ public class World extends JPanel
         listOfAllOrganisms.add(new Milt(this, new Point(0,0)));
         listOfAllOrganisms.add(new SosnowskiBorcht(this, new Point(0,0)));
         listOfAllOrganisms.add(new WolfBerry(this, new Point(0,0)));
-        //listOfAllOrganisms.add(new Human(this, new Point(0,0)));
 
         Random r = new Random();
         for (Organism listOfAllOrganism : listOfAllOrganisms)

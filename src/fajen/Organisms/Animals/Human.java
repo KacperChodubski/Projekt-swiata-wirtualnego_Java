@@ -37,7 +37,11 @@ public class Human extends Animal implements IAllBurning
     {
         if (lifeTime > 0)
         {
-            if (this.world.getPressedKey().getKeyCode() == MAGIC_ABILITY)
+            if (this.world.getPressedKey() == null)
+            {
+
+            }
+            else if (this.world.getPressedKey().getKeyCode() == MAGIC_ABILITY)
             {
                 this.abilityDuration = BASIC_ABILITY_DURATION;
             }
