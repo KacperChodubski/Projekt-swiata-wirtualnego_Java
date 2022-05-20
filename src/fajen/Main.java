@@ -6,6 +6,7 @@ import fajen.Organisms.Animals.Wolf;
 import fajen.Organisms.Plants.SosnowskiBorcht;
 import fajen.Organisms.Plants.WolfBerry;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Set;
 
@@ -15,11 +16,10 @@ public class Main
 
     public static void main(String[] args)
     {
-        int h = 21;
-        int w = 31;
+        int h = 20;
+        int w = 20;
         World world = new World(w,h);
         world.setWorldDimension(MAIN_WINDOW_DIMENSION);
         MainWindow mainWindow = new MainWindow(MAIN_WINDOW_DIMENSION, world);
-        world.save();
     }
 }

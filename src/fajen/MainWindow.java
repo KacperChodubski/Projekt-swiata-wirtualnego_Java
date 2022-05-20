@@ -34,6 +34,7 @@ public class MainWindow extends JFrame
     JComboBox <Organism> boxOfOrganisms;
     public MainWindow(Dimension dimension, World world)
     {
+        gettingSizeOfMap(world);
         boxOfOrganisms = new JComboBox<Organism>();
         for (Organism org: world.listOfAllOrganisms)
         {
@@ -43,47 +44,11 @@ public class MainWindow extends JFrame
         boxOfOrganisms.setVisible(true);
         boxOfOrganisms.setBounds(dimension.width/2 - BOX_WIDTH/2, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
 
-        JButton saveButton = new JButton("Save");
-        saveButton.setFocusable(false);
-        saveButton.setBounds(SAVE_BUTTON_X, SAVE_BUTTON_Y, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
-        add(saveButton);
-        saveButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                world.save();
-                world.draw(world.getGraphics());
-            }
-        });
+        addingSaveButton(world);
 
-        JButton loadButton = new JButton("Load");
-        loadButton.setFocusable(false);
-        loadButton.setBounds(LOAD_BUTTON_X, LOAD_BUTTON_Y, LOAD_BUTTON_WIDTH, LOAD_BUTTON_HEIGHT);
-        add(loadButton);
-        loadButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                world.readSave();
-                world.draw(world.getGraphics());
-            }
-        });
+        addingLoadButton(world);
 
-        JButton nextTurnButton = new JButton("Next turn");
-        nextTurnButton.setFocusable(false);
-        nextTurnButton.setBounds(NEXT_TURN_BUTTON_X, NEXT_TURN_BUTTON_Y, NEXT_TURN_BUTTON_WIDTH, NEXT_TURN_BUTTON_HEIGHT);
-        add(nextTurnButton);
-        nextTurnButton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                world.nextTurn();
-                world.draw(world.getGraphics());
-            }
-        });
+        addingNextTurnButton(world);
 
         getContentPane().add(boxOfOrganisms);
         setSize(dimension);
@@ -114,7 +79,6 @@ public class MainWindow extends JFrame
         });
         add(world);
         world.setVisible(true);
-
         world.addMouseListener(new MouseAdapter()
         {
             @Override
@@ -145,5 +109,72 @@ public class MainWindow extends JFrame
 
         setLayout(null);
         setVisible(true);
+    }
+
+
+    private void addingSaveButton(World world)
+    {
+        JButton saveButton = new JButton("Save");
+        saveButton.setFocusable(false);
+        saveButton.setBounds(SAVE_BUTTON_X, SAVE_BUTTON_Y, SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT);
+        add(saveButton);
+        saveButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                world.save();
+                world.draw(world.getGraphics());
+            }
+        });
+    }
+
+    private void addingLoadButton (World world)
+    {
+        JButton loadButton = new JButton("Load");
+        loadButton.setFocusable(false);
+        loadButton.setBounds(LOAD_BUTTON_X, LOAD_BUTTON_Y, LOAD_BUTTON_WIDTH, LOAD_BUTTON_HEIGHT);
+        add(loadButton);
+        loadButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                world.readSave();
+                world.draw(world.getGraphics());
+            }
+        });
+    }
+
+    private void addingNextTurnButton(World world)
+    {
+        JButton nextTurnButton = new JButton("Next turn");
+        nextTurnButton.setFocusable(false);
+        nextTurnButton.setBounds(NEXT_TURN_BUTTON_X, NEXT_TURN_BUTTON_Y, NEXT_TURN_BUTTON_WIDTH, NEXT_TURN_BUTTON_HEIGHT);
+        add(nextTurnButton);
+        nextTurnButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                world.nextTurn();
+                world.draw(world.getGraphics());
+            }
+        });
+    }
+
+    private void gettingSizeOfMap (World world)
+    {
+        try
+        {
+            int x = Integer.parseInt(JOptionPane.showInputDialog(this, "Szerokosc:", "20"));
+            int y = Integer.parseInt(JOptionPane.showInputDialog(this, "Wysokosc:", "20"));
+            world.resizeWorld(x, y);
+            world.createRandomWorld();
+        }
+        catch (NumberFormatException nfe)
+        {
+            System.err.println("Rozmiar mapy musi byc liczba");
+        }
     }
 }

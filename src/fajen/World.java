@@ -51,6 +51,7 @@ public class World extends JPanel
     public World()
     {
         listOfOrganisms = new PriorityQueue<>();
+        addingToListOfAllOrg();
         map = new Map();
         createRandomWorld();
     }
@@ -58,8 +59,23 @@ public class World extends JPanel
     public World(int x, int y)
     {
         listOfOrganisms = new PriorityQueue<>();
+        addingToListOfAllOrg();
         map = new Map(x, y);
         createRandomWorld();
+    }
+
+    private void addingToListOfAllOrg ()
+    {
+        listOfAllOrganisms.add(new Bubal(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Ship(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Wolf(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Fox(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Tortoise(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Grass(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Guarana(this, new Point(0,0)));
+        listOfAllOrganisms.add(new Milt(this, new Point(0,0)));
+        listOfAllOrganisms.add(new SosnowskiBorcht(this, new Point(0,0)));
+        listOfAllOrganisms.add(new WolfBerry(this, new Point(0,0)));
     }
 
     public Dimension getSizeOfTile()
@@ -73,6 +89,8 @@ public class World extends JPanel
     }
 
     private Dimension sizeOfTile;
+
+
 
     public Map map;
     public PriorityQueue<Organism> listOfOrganisms;
@@ -120,19 +138,10 @@ public class World extends JPanel
         }
     }
 
-    private void createRandomWorld()
+    public void createRandomWorld()
     {
-        listOfAllOrganisms.add(new Bubal(this, new Point(0,0)));
-        listOfAllOrganisms.add(new Ship(this, new Point(0,0)));
-        listOfAllOrganisms.add(new Wolf(this, new Point(0,0)));
-        listOfAllOrganisms.add(new Fox(this, new Point(0,0)));
-        listOfAllOrganisms.add(new Tortoise(this, new Point(0,0)));
-        listOfAllOrganisms.add(new Grass(this, new Point(0,0)));
-        listOfAllOrganisms.add(new Guarana(this, new Point(0,0)));
-        listOfAllOrganisms.add(new Milt(this, new Point(0,0)));
-        listOfAllOrganisms.add(new SosnowskiBorcht(this, new Point(0,0)));
-        listOfAllOrganisms.add(new WolfBerry(this, new Point(0,0)));
 
+        this.listOfOrganisms.clear();
         Random r = new Random();
         for (Organism listOfAllOrganism : listOfAllOrganisms)
         {
@@ -172,6 +181,14 @@ public class World extends JPanel
         }
     }
 
+    public void resizeWorld (int w, int h)
+    {
+        map = new Map(w, h);
+        int sizeOfTileY = this.getWorldDimension().height / this.map.getSizeY();
+        int sizeOfTileX = this.getWorldDimension().width / this.map.getSizeX();
+        this.setSizeOfTile(new Dimension(sizeOfTileX, sizeOfTileY));
+    }
+
     public void readSave ()
     {
         try
@@ -181,10 +198,7 @@ public class World extends JPanel
             String[] mapParameters = mapString.split(" ");
             int mapX = Integer.parseInt(mapParameters[0]);
             int mapY = Integer.parseInt(mapParameters[1]);
-            map = new Map(mapX, mapY);
-            int sizeOfTileY = this.getWorldDimension().height / this.map.getSizeY();
-            int sizeOfTileX = this.getWorldDimension().width / this.map.getSizeX();
-            this.setSizeOfTile(new Dimension(sizeOfTileX, sizeOfTileY));
+            this.resizeWorld(mapX, mapY);
             String orgString = reader.readLine();
             this.listOfOrganisms = new PriorityQueue<>();
             while (orgString != null)
