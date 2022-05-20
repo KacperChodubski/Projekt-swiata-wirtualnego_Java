@@ -15,8 +15,8 @@ public class Main
 
     public static void main(String[] args)
     {
-        int h = 40;
-        int w = 40;
+        int h = 21;
+        int w = 31;
         World world = new World(w,h);
         world.setWorldDimension(MAIN_WINDOW_DIMENSION);
         MainWindow mainWindow = new MainWindow(MAIN_WINDOW_DIMENSION, world);
