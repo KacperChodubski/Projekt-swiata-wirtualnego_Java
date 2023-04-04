@@ -1,9 +1,9 @@
-package fajen.Organisms.Animals;
+package ProjectModel.Organisms.Animals;
 
-import fajen.Organisms.Animal;
-import fajen.Organisms.ISmart;
-import fajen.Organisms.Organism;
-import fajen.World;
+import ProjectModel.Organisms.Animal;
+import ProjectModel.Organisms.ISmart;
+import ProjectModel.Organisms.Organism;
+import ProjectModel.World;
 
 import java.awt.*;
 

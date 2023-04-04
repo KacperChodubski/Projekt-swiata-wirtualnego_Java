@@ -1,6 +1,6 @@
-package fajen;
+package ProjectModel;
 
-import fajen.Organisms.Organism;
+import ProjectModel.Organisms.Organism;
 
 import javax.swing.*;
 import java.awt.*;

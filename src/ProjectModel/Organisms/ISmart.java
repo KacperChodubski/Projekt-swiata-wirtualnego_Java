@@ -1,4 +1,4 @@
-package fajen.Organisms;
+package ProjectModel.Organisms;
 
 import java.awt.*;
 

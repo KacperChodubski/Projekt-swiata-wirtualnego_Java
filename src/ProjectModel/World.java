@@ -1,8 +1,8 @@
-package fajen;
+package ProjectModel;
 
-import fajen.Organisms.Animals.*;
-import fajen.Organisms.Organism;
-import fajen.Organisms.Plants.*;
+import ProjectModel.Organisms.Animals.*;
+import ProjectModel.Organisms.Organism;
+import ProjectModel.Organisms.Plants.*;
 
 import javax.swing.*;
 import java.awt.*;

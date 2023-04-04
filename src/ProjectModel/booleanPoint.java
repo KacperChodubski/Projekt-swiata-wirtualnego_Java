@@ -1,4 +1,4 @@
-package fajen;
+package ProjectModel;
 
 import java.awt.*;
 

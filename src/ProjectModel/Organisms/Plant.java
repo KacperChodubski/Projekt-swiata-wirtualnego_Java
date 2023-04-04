@@ -1,6 +1,6 @@
-package fajen.Organisms;
+package ProjectModel.Organisms;
 
-import fajen.World;
+import ProjectModel.World;
 
 import java.awt.*;
 import java.util.ArrayList;

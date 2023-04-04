@@ -1,8 +1,6 @@
-package fajen.Organisms;
+package ProjectModel.Organisms;
 
-import fajen.Organisms.Organism;
-import fajen.World;
-import fajen.booleanPoint;
+import ProjectModel.World;
 
 import java.awt.*;
 import java.util.ArrayList;

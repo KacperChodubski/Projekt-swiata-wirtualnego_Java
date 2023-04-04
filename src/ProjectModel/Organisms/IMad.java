@@ -1,4 +1,4 @@
-package fajen.Organisms;
+package ProjectModel.Organisms;
 
 public interface IMad
 {

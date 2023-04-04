@@ -1,14 +1,6 @@
-package fajen;
+package ProjectModel;
 
-import fajen.Organisms.Animals.Bubal;
-import fajen.Organisms.Animals.Ship;
-import fajen.Organisms.Animals.Wolf;
-import fajen.Organisms.Plants.SosnowskiBorcht;
-import fajen.Organisms.Plants.WolfBerry;
-
-import javax.swing.*;
 import java.awt.*;
-import java.util.Set;
 
 public class Main
 {
